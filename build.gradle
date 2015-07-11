@@ -1,0 +1,19 @@
+version '1.0-SNAPSHOT'
+
+apply plugin: 'application'
+apply from: 'http://dl.bintray.com/content/shemnon/javafx-gradle/0.4.0/javafx.plugin'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+mainClassName = 'meisters.tool.bluetooth.Main'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.12', 'name.prokop.bart.rxtx:rxtx:2.2.1'
+    testCompile 'junit:junit:4.12'
+}
