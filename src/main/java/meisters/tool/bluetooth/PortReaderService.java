@@ -7,9 +7,11 @@ import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class PortReaderService extends ScheduledService<String> {
 
-    private int i = 0;
     private SerialPort mPort;
     private final CommPortIdentifier mPortId;
 
@@ -24,18 +26,13 @@ public class PortReaderService extends ScheduledService<String> {
 
             @Override
             protected String call() throws Exception {
-//                InputStream inputStream = null;
-//                byte[] bytes = new byte[2048];
-//                try {
-//                    inputStream = mPort.getInputStream();
-//                    inputStream.read(bytes);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } finally {
-//                    inputStream.close();
-//                }
-//                return new String(bytes, "UTF-8");
-                return "test" + i++;
+                byte[] bytes = new byte[2048];
+                try (InputStream inputStream = mPort.getInputStream()) {
+                    inputStream.read(bytes);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return new String(bytes, "UTF-8");
             }
         };
     }
