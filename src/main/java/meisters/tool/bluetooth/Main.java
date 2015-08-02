@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import meisters.tool.bluetooth.model.COMPort;
 import meisters.tool.bluetooth.model.Port;
+import meisters.tool.bluetooth.model.TestPort;
 import meisters.tool.bluetooth.view.MainController;
 
 import java.io.IOException;
@@ -34,6 +35,7 @@ public class Main extends Application {
             ports.add(new COMPort(portId));
             System.out.print(portId.getName());
         }
+        ports.add(new TestPort());
         mController.setPortList(ports);
 
         primaryStage.setScene(new Scene(root, 600, 400));

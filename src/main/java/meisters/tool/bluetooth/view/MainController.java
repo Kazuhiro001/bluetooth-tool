@@ -23,6 +23,7 @@ public class MainController implements Initializable {
     private TableView<LogData> logTable;
     @FXML
     private TableColumn<LogData, String> firstColumn;
+    private Port mConnectedPort;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -35,13 +36,15 @@ public class MainController implements Initializable {
 
     @FXML
     public void connect(ActionEvent actionEvent) {
-        Port port = portList.getValue();
-        port.connect();
-        logTable.setItems(port.getLogData());
-        System.out.println("connect to " + port.toString());
+        mConnectedPort = portList.getValue();
+        mConnectedPort.connect();
+        logTable.setItems(mConnectedPort.getLogData());
+        System.out.println("connect to " + mConnectedPort.toString());
     }
 
     public void finish() {
-        portList.getValue().disConnect();
+        if (mConnectedPort != null) {
+            mConnectedPort.disConnect();
+        }
     }
 }
