@@ -1,40 +1,23 @@
 package meisters.tool.bluetooth;
 
 import gnu.io.CommPortIdentifier;
-import gnu.io.NoSuchPortException;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import meisters.tool.bluetooth.model.LogData;
+import meisters.tool.bluetooth.model.COMPort;
+import meisters.tool.bluetooth.model.Port;
+import meisters.tool.bluetooth.model.TestPort;
 import meisters.tool.bluetooth.view.MainController;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 public class Main extends Application {
 
-    ObservableList<LogData> mLogData = FXCollections.observableArrayList();
-    private PortReaderService mPortReaderService;
-
-    public void connectToPort(String portName) {
-        CommPortIdentifier portID = null;
-        try {
-            portID = CommPortIdentifier.getPortIdentifier(portName);
-        } catch (NoSuchPortException e) {
-            e.printStackTrace();
-        }
-        mPortReaderService = new PortReaderService(portID, Duration.millis(4));
-        mPortReaderService.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                mLogData.add(new LogData(newValue));
-            }
-        });
-        mPortReaderService.start();
-    }
+    private MainController mController;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -42,8 +25,18 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("view/main.fxml"));
         Parent root = loader.load();
-        MainController controller = loader.getController();
-        controller.setMain(this);
+        mController = loader.getController();
+        ArrayList<Port> ports = new ArrayList<>();
+        Enumeration portIdentifiers =
+                CommPortIdentifier.getPortIdentifiers();
+        while (portIdentifiers.hasMoreElements()) {
+            CommPortIdentifier portId = (CommPortIdentifier)
+                    portIdentifiers.nextElement();
+            ports.add(new COMPort(portId));
+            System.out.print(portId.getName());
+        }
+        ports.add(new TestPort());
+        mController.setPortList(ports);
 
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
@@ -54,15 +47,9 @@ public class Main extends Application {
         launch(args);
     }
 
-    public ObservableList<LogData> getLogData() {
-        return mLogData;
-    }
-
     @Override
     public void stop() throws Exception {
         super.stop();
-        if (mPortReaderService != null) {
-            mPortReaderService.cancel();
-        }
+        mController.finish();
     }
 }

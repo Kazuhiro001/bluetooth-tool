@@ -71,6 +71,5 @@ public class PortReaderService extends ScheduledService<String> {
     protected void cancelled() {
         super.cancelled();
         closePort();
-
     }
 }
