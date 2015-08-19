@@ -25,7 +25,7 @@ public class COMPort extends Port {
     public void connect() {
         mPortReaderService = new PortReaderService(mPortId, Duration.millis(4));
         mPortReaderService.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
+            if (newValue != null && 0 < newValue.length()) {
                 getLogData().add(new LogData(newValue));
             }
         });
