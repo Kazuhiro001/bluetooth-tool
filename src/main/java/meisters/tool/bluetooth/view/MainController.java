@@ -42,6 +42,13 @@ public class MainController implements Initializable {
         System.out.println("connect to " + mConnectedPort.toString());
     }
 
+    @FXML
+    public void disconnect(ActionEvent actionEvent) {
+        if (mConnectedPort != null) {
+            mConnectedPort.disConnect();
+        }
+    }
+
     public void finish() {
         if (mConnectedPort != null) {
             mConnectedPort.disConnect();

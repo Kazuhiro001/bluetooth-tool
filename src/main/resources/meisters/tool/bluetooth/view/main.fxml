@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="meisters.tool.bluetooth.view.MainController">
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="meisters.tool.bluetooth.view.MainController">
     <top>
-        <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="227.0" spacing="4.0"
-              BorderPane.alignment="CENTER_LEFT">
+        <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="227.0" spacing="4.0" BorderPane.alignment="CENTER_LEFT">
             <children>
-                <Label text="COMポート番号: "/>
-                <ChoiceBox fx:id="portList" prefHeight="23.0" prefWidth="124.0"/>
-                <Button mnemonicParsing="false" onAction="#connect" text="接続"/>
+                <Label text="COMポート番号: " />
+                <ChoiceBox fx:id="portList" prefHeight="23.0" prefWidth="124.0" />
+                <Button mnemonicParsing="false" onAction="#connect" text="接続" />
+            <Button fx:id="disConnect" mnemonicParsing="false" onAction="#disconnect" text="切断" />
             </children>
             <padding>
-                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
             </padding>
             <BorderPane.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </BorderPane.margin>
         </HBox>
     </top>
     <center>
         <TableView fx:id="logTable" BorderPane.alignment="CENTER">
             <columns>
-                <TableColumn fx:id="firstColumn" prefWidth="75.0" text="ログデータ"/>
+                <TableColumn fx:id="firstColumn" prefWidth="75.0" text="ログデータ" />
             </columns>
             <columnResizePolicy>
-                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
     </center>
